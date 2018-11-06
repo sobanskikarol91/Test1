@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class EditMode : IState
 {
@@ -20,8 +21,13 @@ public class EditMode : IState
 
     public void Execute()
     {
-        if (Input.GetKeyDown(KeyBind.CreatePoint))
+        if (Input.GetKeyDown(KeyBind.CreatePoint) && !EventSystem.current.IsPointerOverGameObject())
             CreatePoint();
+    }
+
+    public void Exit()
+    {
+      
     }
 
     public void CreatePoint()
@@ -31,4 +37,6 @@ public class EditMode : IState
         Transform newPoint = GameObject.Instantiate(pointPrefab, pointPos, Quaternion.identity).transform;
         points.Add(newPoint);
     }
+
+
 }

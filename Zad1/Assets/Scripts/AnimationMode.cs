@@ -35,6 +35,11 @@ public class AnimationMode : IState
             Move();
     }
 
+    public void Exit()
+    {
+        DestroyPoints();
+    }
+
     void SetPlayerOrginPosition()
     {
         player.position = points.First().position;
@@ -74,5 +79,10 @@ public class AnimationMode : IState
     bool WasLastPoint()
     {
         return points.Count == 0;
+    }
+
+    void DestroyPoints()
+    {
+        points.ForEach(p => GameObject.Destroy(p.gameObject));
     }
 }
