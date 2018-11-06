@@ -4,8 +4,10 @@ using System.Collections.Generic;
 
 /*
 	Należy stworzyć prostą scenę, na której cube porusza się pomiędzy punktami.
-    Po odpaleniu gry znajdujemy się w trybie edycji, w którym przez kliknięcie lewym , przyciskiem myszki, będzie dodawany punkt we wskazanym miejscu. 
-    Gra ta powinna posiadać przycisk "Start", który przenosi nas do trybu animacji. W trybie animacji postać znajduje się w miejscu pierwszego punktu. 
+    Po odpaleniu gry znajdujemy się w trybie edycji, w którym przez kliknięcie lewym , przyciskiem myszki, 
+    będzie dodawany punkt we wskazanym miejscu. 
+    Gra ta powinna posiadać przycisk "Start", który przenosi nas do trybu animacji. 
+    W trybie animacji postać znajduje się w miejscu pierwszego punktu. 
     Gdy trzymamy wciśnięty przycisk spacji postać płynnie przyśpiesza, gdy go puścimy postać płynnie zwalnia, aż do zerowej prędkości.  
 */
 
@@ -39,11 +41,11 @@ public class GameManager : MonoBehaviour
 
     void ChangeState(IState state)
     {
-        state.Enter();
         currentState = state;
+        state.Enter();
     }
 
     /*
      * 
-     * zmienic liste na kolejke */
+     *  */
 }

@@ -7,10 +7,10 @@ public class AnimationMode : IState
 {
     Transform player;
     List<Transform> points = new List<Transform>();
-
     Vector2 destination;
     Vector2 direction;
     float currentSpeed;
+    int currentPoint = 0;
 
     public AnimationMode(ref Transform player, ref List<Transform> points)
     {
@@ -38,11 +38,13 @@ public class AnimationMode : IState
     void SetPlayerOrginPosition()
     {
         player.position = points.First().position;
-        points.Remove(points.First());
+        currentPoint = 1;
     }
 
     void Move()
     {
+        if (currentSpeed == 0) return;
+
         player.position = Vector2.MoveTowards(player.position, destination, currentSpeed);
 
         if (Vector2.Distance(player.position, destination) < 0.1f)
@@ -65,8 +67,8 @@ public class AnimationMode : IState
 
     void SetDestination()
     {
-        destination = points.First().position;
-        points.Remove(points.First());
+        currentPoint++;
+        destination = points[currentPoint].position;
     }
 
     bool WasLastPoint()
