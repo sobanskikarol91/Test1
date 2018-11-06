@@ -10,7 +10,6 @@ public class AnimationMode : IState
     float currentSpeed;
     int currentPoint;
 
-
     public AnimationMode(ref Transform player, ref List<Transform> points)
     {
         this.player = player;
