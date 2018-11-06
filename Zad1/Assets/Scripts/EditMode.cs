@@ -7,6 +7,7 @@ public class EditMode : IState
     GameObject pointPrefab;
     List<Transform> points;
     
+
     public EditMode(GameObject pointPrefab, ref List<Transform> points)
     {
         this.pointPrefab = pointPrefab;

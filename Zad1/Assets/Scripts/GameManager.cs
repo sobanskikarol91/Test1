@@ -24,42 +24,34 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] GameObject pointPrefab;
 
     List<Transform> pointsTrans = new List<Transform>();
-    IState currentState;
     AnimationMode animationMode;
     EditMode editMode;
+    StateMachine stateMachine;
 
 
     void Start()
     {
         editMode = new EditMode(pointPrefab, ref pointsTrans);
         animationMode = new AnimationMode(ref Player, ref pointsTrans);
-        currentState = editMode;
+        stateMachine = new StateMachine(editMode);
     }
 
     void Update()
     {
-        currentState.Execute();
+        stateMachine.Execute();
     }
 
     public void ChangeToAnimation()
     {
-        ChangeState(animationMode);
+        stateMachine.ChangeState(animationMode);
     }
 
     public void ChangeToEdit()
     {
-        ChangeState(editMode);
-    }
-
-    void ChangeState(IState state)
-    {
-        currentState.Exit();
-        currentState = state;
-        currentState.Enter();
+        stateMachine.ChangeState(editMode);
     }
 }
 /*
  * usunac niepotrzebne bibliteki
- * sytuacje skrajne 0 elementow:
  * 
  */

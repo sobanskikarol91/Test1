@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject panelUI;
     [SerializeField] Button startBTN;
 
+
     public void ShowEditPanel()
     {
         panelUI.SetActive(true);
