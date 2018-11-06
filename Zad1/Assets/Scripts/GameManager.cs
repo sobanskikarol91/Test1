@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 /*
@@ -17,15 +16,18 @@ przyciskiem myszki, będzie dodawany punkt we wskazanym miejscu.
 	Na zakończenie animacji usuwamy wszystkie punkty i wracamy do edytora. 
 */
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] public Transform Player;
-    [SerializeField] GameObject pointPrefab;
-    List<Transform> pointsTrans = new List<Transform>();
+    public UIManager uiManager;
 
+    [SerializeField] Transform Player;
+    [SerializeField] GameObject pointPrefab;
+
+    List<Transform> pointsTrans = new List<Transform>();
     IState currentState;
     AnimationMode animationMode;
     EditMode editMode;
+
 
     void Start()
     {
@@ -44,6 +46,11 @@ public class GameManager : MonoBehaviour
         ChangeState(animationMode);
     }
 
+    public void ChangeToEdit()
+    {
+        ChangeState(editMode);
+    }
+
     void ChangeState(IState state)
     {
         currentState.Exit();
@@ -52,6 +59,7 @@ public class GameManager : MonoBehaviour
     }
 }
 /*
+ * usunac niepotrzebne bibliteki
  * sytuacje skrajne 0 elementow:
  * 
  */

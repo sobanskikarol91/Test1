@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
@@ -7,7 +6,7 @@ public class EditMode : IState
 {
     GameObject pointPrefab;
     List<Transform> points;
-
+    
     public EditMode(GameObject pointPrefab, ref List<Transform> points)
     {
         this.pointPrefab = pointPrefab;
@@ -16,18 +15,21 @@ public class EditMode : IState
 
     public void Enter()
     {
-
+        GameManager.instance.uiManager.ShowEditPanel();
     }
 
     public void Execute()
     {
         if (Input.GetKeyDown(KeyBind.CreatePoint) && !EventSystem.current.IsPointerOverGameObject())
+        {
             CreatePoint();
+            TryUnlockButton();
+        }
     }
 
     public void Exit()
     {
-      
+        GameManager.instance.uiManager.HideEditPanel();
     }
 
     public void CreatePoint()
@@ -38,5 +40,9 @@ public class EditMode : IState
         points.Add(newPoint);
     }
 
-
+    void TryUnlockButton()
+    {
+        if (points.Count >= Settings.MinPointsAmount)
+            GameManager.instance.uiManager.ActiveStartBTN();
+    }
 }

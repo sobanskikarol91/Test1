@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,7 +9,7 @@ public class AnimationMode : IState
     Vector2 destination;
     Vector2 direction;
     float currentSpeed;
-    int currentPoint = 0;
+    int currentPoint;
 
     public AnimationMode(ref Transform player, ref List<Transform> points)
     {
@@ -20,8 +19,9 @@ public class AnimationMode : IState
 
     public void Enter()
     {
+        currentSpeed = currentPoint = 0;
         SetPlayerOrginPosition();
-        SetDestination();
+        SetNewDestination();
     }
 
     public void Execute()
@@ -31,8 +31,7 @@ public class AnimationMode : IState
         else
             DecreaseVelocity();
 
-        if (!WasLastPoint())
-            Move();
+        Move();
     }
 
     public void Exit()
@@ -43,7 +42,6 @@ public class AnimationMode : IState
     void SetPlayerOrginPosition()
     {
         player.position = points.First().position;
-        currentPoint = 1;
     }
 
     void Move()
@@ -55,7 +53,7 @@ public class AnimationMode : IState
         if (Vector2.Distance(player.position, destination) < 0.1f)
         {
             player.position = destination;
-            SetDestination();
+            SetNewDestination();
         }
     }
 
@@ -70,19 +68,26 @@ public class AnimationMode : IState
         if (currentSpeed < 0) currentSpeed = 0;
     }
 
-    void SetDestination()
+    void SetNewDestination()
     {
-        currentPoint++;
-        destination = points[currentPoint].position;
+        if (WasLastPoint())
+            GameManager.instance.ChangeToEdit();
+        else
+        {
+            currentPoint++;
+            destination = points[currentPoint].position;
+        }
+
     }
 
     bool WasLastPoint()
     {
-        return points.Count == 0;
+        return currentPoint == points.Count - 1;
     }
 
     void DestroyPoints()
     {
         points.ForEach(p => GameObject.Destroy(p.gameObject));
+        points.Clear();
     }
 }
