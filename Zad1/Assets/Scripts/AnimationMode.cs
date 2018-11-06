@@ -7,7 +7,6 @@ public class AnimationMode : IState
     Transform player;
     List<Transform> points = new List<Transform>();
     Vector2 destination;
-    Vector2 direction;
     float currentSpeed;
     int currentPoint;
 
